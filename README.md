@@ -5,7 +5,8 @@
 
 > git clone https://github.com/Torilen/Brillibot.git
 
-3) Une fois toutes les modifications apportées, revenez ici et cliquez sur le bouton "New Pull Request" pour envoyer vos modifications. Elles seront revues par des pairs et des modifications pourront vous être demandées.
+3) Envoyez un mail à aniss.bentebib@etu.univ-nantes.fr pour demander à être collaborateur/collaboratrice du projet. Par défaut nous acceptons tout le monde souhaitant apporter au projet.
+4) Une fois toutes les modifications apportées, revenez ici et cliquez sur le bouton "New Pull Request" pour envoyer vos modifications. Elles seront revues par des pairs et des modifications pourront vous être demandées.
 
 ## Références
 * [Embedding models for episodic knowledge graphs](https://scholar.google.com/scholar_url?url=https://www.sciencedirect.com/science/article/pii/S1570826818300702&hl=fr&sa=T&oi=gsb&ct=res&cd=0&d=5238262037328151074&ei=35ylXuaYBNqIy9YP85eIwAc&scisig=AAGBfm2S2N0AQmRqbobunMAeoxWJA9VR4w) Y Ma, V Tresp, EA Daxberger - Journal of Web Semantics, 2019
