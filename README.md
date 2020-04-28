@@ -1,9 +1,9 @@
-# Bienvenue sur Brillibot
+# Bienvenue sur Grafbot
 ## Comment contribuer ?
 1) Regardez la liste des taĉhes à réaliser classées par catégorie de compétence (Informatique, Linguistique, Psychologie, etc)
 2) Clonez le repo sur votre machine pour y apporter des modifications.
 
-> git clone https://github.com/Torilen/Brillibot.git
+> git clone https://github.com/Torilen/Grafbot.git
 
 3) Envoyez un mail à aniss.bentebib@etu.univ-nantes.fr pour demander à être collaborateur/collaboratrice du projet. Par défaut nous acceptons tout le monde souhaitant apporter au projet.
 4) Une fois toutes les modifications apportées, revenez ici et cliquez sur le bouton "New Pull Request" pour envoyer vos modifications. Elles seront revues par des pairs et des modifications pourront vous être demandées.
