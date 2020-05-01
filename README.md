@@ -1,6 +1,31 @@
-# Bienvenue sur Grafbot
+![logo-grafbot](D:\Git\Grafbot\assets\logo-grafbot.png)
+
+<p>
+  <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
+  <a href="https://github.com/Torilen/Grafbot#readme" target="_blank">
+    <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
+  </a>
+  <a href="https://github.com/Torilen/Grafbot/graphs/commit-activity" target="_blank">
+    <img alt="Maintenance" src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" />
+  </a>
+  <a href="https://github.com/Torilen/Grafbot/blob/master/LICENSE" target="_blank">
+    <img alt="License: MIT" src="https://img.shields.io/github/license/Torilen/Grafbot" />
+  </a>
+</p>
+
+# Bienvenue 👋
+
+## Grafbot ?
+
+Grafbot est une initiative étudiante de recherche Nantaise en traitement automatique du langage. L'idée qui se cache derrière ce projet est de pouvoir créer, imaginer, œuvrer ensemble à la réalisation d'un outil de manière complétement indépendante et participative.  
+
+Plus concrètement, Grafbot est un outil de traitement du langage basé sur des structures de données à base de graphe. S'il est question de graphe c'est parce qu'il est question d'implémentation de stockage d'information sémantique. Pour être précis, Grafbot est une initiative de recherche cherchant à mesurer l'efficacité de systèmes "intelligents" conciliant des domaines comme les neurosciences, la psychologie cognitive, l'informatique (machine learning), etc.
+
+Ici le projet repose sur les concepts de mémoire sémantique (la mémoire des faits) et de mémoire épisodique (la mémoire des souvenirs). 
+
 ## Comment contribuer ?
-1) Regardez la liste des taĉhes à réaliser classées par catégorie de compétence (Informatique, Linguistique, Psychologie, etc)
+
+1) Regardez la liste des tâches à réaliser classées par catégorie de compétence (Informatique, Linguistique, Psychologie, etc)
 2) Clonez le repo sur votre machine pour y apporter des modifications.
 
 > git clone https://github.com/Torilen/Grafbot.git

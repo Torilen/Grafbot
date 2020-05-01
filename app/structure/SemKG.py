@@ -30,12 +30,14 @@ class SemKG:
             self.graph[(s, o)] += 1
             self.graph[(o, s)] = self.graph[(s, o)]
 
-    def add_relations(self, rels):
+    def add_relations(self, rels, epikg):
         for rel in rels:
             s = rel[0]
             o = rel[1]
 
             self.add_relation(s, o)
+            epikg.add_relation(self.graphNodeId[s], self.graphNodeId[o], "a mangé")
 
-    def get_stories(self, epikg, entities, top_n=5):
+    def get_stories(self, epikg, entities, top_n=5, steps=5):
+        stories = epikg.get_stories([self.graphNodeId[e] for e in entities], top_n, steps)
         return 0
