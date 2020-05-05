@@ -1,0 +1,8 @@
+pandas
+numpy
+torch
+pytorch-ignite
+googletrans
+transformers==2.5.1
+tensorboardX==1.8
+tensorflow

@@ -8,7 +8,8 @@ class EpiKG:
     def get_graph(self):
         return {"predicate_root": self.graph_a_pointed_b, "s_root": self.graph_a_pointed_b_direct}
 
-    def add_relation(self, s, o, p):
+    def add_relation(self, s, o, input, index1, index2):
+        p = self.predict_relation(s, o, input, index1, index2)
         t = time.time()
         print(str(t))
         if(p not in list(self.graph_a_pointed_b.keys())):
@@ -38,14 +39,18 @@ class EpiKG:
                     self.graph_a_pointed_b_direct[s][o].append(p)
 
 
-    def predict_relation(self, s, o):
-        return "a mangé"
+    def predict_relation(self, s, o, input, index1, index2):
+        rel = input.lower().split()[index1+1:index2]
+        if(len(rel) > 0):
+            return " ".join(rel)
+        else:
+            return ""
 
-    def add_relations(self, rels):
+    def add_relations(self, rels, input):
         for rel in rels:
-            s = rel[0]
-            o = rel[1]
-            p = self.predict_relation(s, o)
+            s = rel[0][0]
+            o = rel[1][0]
+            p = self.predict_relation(s, o, input, rel[0][1], rel[1][1])
 
             self.add_relation(s, o, p)
 
