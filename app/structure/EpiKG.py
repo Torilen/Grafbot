@@ -1,5 +1,6 @@
 import time
 import pandas as pd
+import json
 
 class EpiKG:
     graph_a_pointed_b = dict()
@@ -8,7 +9,20 @@ class EpiKG:
     def get_graph(self):
         return {"predicate_root": self.graph_a_pointed_b, "s_root": self.graph_a_pointed_b_direct}
 
+    def to_json(self):
+        return json.dumps(self.get_graph())
+
+    def load_from_json(self, json):
+        data = json.loads(json)
+        self.graph_a_pointed_b = data["predicate_root"]
+        self.graph_a_pointed_b_direct = data["s_root"]
+
+    def save(self, path, name="epikg.json"):
+        with open(path+"/"+name, 'w') as json_file:
+            json.dump(self.to_json(), json_file)
+
     def add_relation(self, s, o, input, index1, index2):
+        #print(index1, index2)
         p = self.predict_relation(s, o, input, index1, index2)
         t = time.time()
         print(str(t))
@@ -41,6 +55,7 @@ class EpiKG:
 
     def predict_relation(self, s, o, input, index1, index2):
         rel = input.lower().split()[index1+1:index2]
+        print(rel)
         if(len(rel) > 0):
             return " ".join(rel)
         else:
@@ -50,7 +65,7 @@ class EpiKG:
         for rel in rels:
             s = rel[0][0]
             o = rel[1][0]
-            p = self.predict_relation(s, o, input, rel[0][1], rel[1][1])
+            p = self.predict_relation(s, o, input, str(rel[0][1]), str(rel[1][1]))
 
             self.add_relation(s, o, p)
 
@@ -77,7 +92,7 @@ class EpiKG:
                     graph_content_stories.append(s)
 
 
-        stories = pd.DataFrame(graph_content_stories, columns=["s", "o", "p", "time"]).sort_values(by=['time'])
+        stories = pd.DataFrame(graph_content_stories, columns=["s", "o", "p", "time", "distance"]).sort_values(by=['time'])
 
         print(stories)
 
@@ -87,7 +102,7 @@ class EpiKG:
         childs = self.get_all_node_ids_pointed_by_s(entity)
         l = list()
         for child in childs:
-            l.append([entity, child[0], child[1], self.graph_a_pointed_b[child[1]][entity][child[0]]])
+            l.append([entity, child[0], child[1], self.graph_a_pointed_b[child[1]][entity][child[0]], len(child[1].split())])
         for child in childs:
             if(i < steps):
                 l = l+self.episodic_propagation(child[0], steps, i+1)

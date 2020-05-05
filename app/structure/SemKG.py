@@ -1,3 +1,5 @@
+import json
+
 class SemKG:
     graph = dict()
     graphNodeId = dict()
@@ -7,6 +9,18 @@ class SemKG:
 
     def get_graph(self):
         return {"graph": self.graph, "nodesId": self.graphNodeId}
+
+    def to_json(self):
+        return json.dumps(self.get_graph())
+
+    def load_from_json(self, json):
+        data = json.loads(json)
+        self.graph = data["graph"]
+        self.graphNodeId = data["nodesId"]
+
+    def save(self, path, name="semkg.json"):
+        with open(path+"/"+name, 'w') as json_file:
+            json.dump(self.to_json(), json_file)
 
     def add_node(self, node):
         if node not in list(self.graphNodeId.keys()):
@@ -34,6 +48,7 @@ class SemKG:
         for rel in rels:
             s = rel[0]
             o = rel[1]
+            print("Tuples")
             print(rel)
             self.add_relation(s[0], o[0])
             epikg.add_relation(self.graphNodeId[s[0]], self.graphNodeId[o[0]], input, s[1], o[1])
