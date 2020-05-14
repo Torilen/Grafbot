@@ -4,10 +4,18 @@ Note: ssml must be well-formed according to:
     https://www.w3.org/TR/speech-synthesis/
 """
 from google.cloud import texttospeech
+from google.oauth2 import service_account
+import os
 
-def speak(text):
+dict_lang = dict()
+dict_lang['fr'] = "fr-FR"
+dict_lang['en'] = "en-US"
+
+def speak(text, lang):
+
+    credentials = service_account.Credentials.from_service_account_file("C:/Users/scorp/Grafbot-c753fa94ac04.json")
     # Instantiates a client
-    client = texttospeech.TextToSpeechClient()
+    client = texttospeech.TextToSpeechClient(credentials=credentials)
 
     # Set the text input to be synthesized
     synthesis_input = texttospeech.types.SynthesisInput(text=text)
@@ -15,8 +23,8 @@ def speak(text):
     # Build the voice request, select the language code ("en-US") and the ssml
     # voice gender ("neutral")
     voice = texttospeech.types.VoiceSelectionParams(
-        language_code='en-US',
-        ssml_gender=texttospeech.enums.SsmlVoiceGender.NEUTRAL)
+        language_code=dict_lang[lang],
+        ssml_gender=texttospeech.enums.SsmlVoiceGender.FEMALE)
 
     # Select the type of audio file you want returned
     audio_config = texttospeech.types.AudioConfig(
@@ -27,7 +35,6 @@ def speak(text):
     response = client.synthesize_speech(synthesis_input, voice, audio_config)
 
     # The response's audio_content is binary.
-    with open('output.mp3', 'wb') as out:
+    with open('web/output.mp3', 'wb') as out:
         # Write the response to the output file.
         out.write(response.audio_content)
-        print('Audio content written to file "output.mp3"')

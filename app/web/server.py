@@ -5,6 +5,7 @@ from parlai.core.worlds import create_task
 from typing import Dict, Any
 from tools.Translator import translate, detect
 from tools.VoiceSynthetiser import speak
+from tools.Utils import process_output_chatbot
 import json
 
 user_language = "fr"
@@ -107,7 +108,10 @@ WEB_HTML = """
                 event.preventDefault()
                 var text = document.getElementById("userIn").value;
                 document.getElementById('userIn').value = "";
-
+                var parDiv = document.getElementById("parent");
+                
+                parDiv.append(createChatRow("You", text));
+                
                 fetch('/interact', {{
                     headers: {{
                         'Content-Type': 'application/json'
@@ -115,13 +119,15 @@ WEB_HTML = """
                     method: 'POST',
                     body: text
                 }}).then(response=>response.json()).then(data=>{{
-                    var parDiv = document.getElementById("parent");
+                    
 
-                    parDiv.append(createChatRow("You", text));
+                    
 
                     // Change info for Model response
                     parDiv.append(createChatRow("Model", data.text));
                     parDiv.scrollTo(0, parDiv.scrollHeight);
+                    var audio = new Audio('../output.mp3');
+                    audio.play();
                 }})
             }});
             document.getElementById("interact").addEventListener("reset", function(event){{
@@ -195,7 +201,13 @@ class MyHandler(BaseHTTPRequestHandler):
                 print(json_value['text'])
                 json_value['text'] = translate(json_value['text'], dest=user_language)
                 json_str = json.dumps(json_value)
-            speak(json.loads(json_str)['text'])
+
+            #process text
+            json_value = json.loads(json_str)
+            json_value['text'] = process_output_chatbot(json_value['text'], user_language)
+            json_str = json.dumps(json_value)
+
+            speak(json.loads(json_str)['text'], user_language)
             answer_bot = bytes(json_str, 'utf-8')
             print(answer_bot)
             self.wfile.write(answer_bot)

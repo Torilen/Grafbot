@@ -7,7 +7,9 @@ import logging
 import os
 import tarfile
 import tempfile
+import re
 import socket
+import random
 
 import torch
 
@@ -66,3 +68,25 @@ def make_logdir(model_name: str):
     logdir = os.path.join(
         'runs', current_time + '_' + socket.gethostname() + '_' + model_name)
     return logdir
+
+def process_output_chatbot(text, lang):
+    #maj sur la première lettre
+    text = text[0:1].upper()+text[1:]
+    #ponctuation mal placée
+    text = re.sub('( \' )', '\'', text)
+    text = re.sub('( \. )', '. ', text)
+    #majuscule aux bons endroits
+    textSplitted = text.split('.')
+    for i in range(len(textSplitted)):
+        if(textSplitted[i][0:1] == " "):
+            textSplitted[i] = " "+textSplitted[i][1:2].upper() + textSplitted[i][2:]
+        else:
+            textSplitted[i] = textSplitted[i][0:1].upper() + textSplitted[i][1:]
+    text = ".".join(textSplitted)
+
+    question = random.randint(0, 2)
+    if(question == 0):
+        text = text.split('.')
+        textWithoutQuestion = ["" if "?" in sentence else sentence for sentence in text]
+        text = ".".join(textWithoutQuestion)
+    return text
