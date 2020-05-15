@@ -10,7 +10,7 @@ from tools.VoiceSynthetiser import speak
 from tools.Utils import process_output_chatbot
 import json
 import base64
-
+env = "ubuntu"
 app = Flask(__name__)
 api = Api(app)
 CORS(app)
@@ -45,7 +45,7 @@ class Interact(Resource):
 
         # process text
         processed_output = process_output_chatbot(json_value['text'], user_language)
-        speak(processed_output, user_language)
+        speak(processed_output, user_language, env)
         json_value.force_set('text', processed_output)
         return jsonify(json_value)
 
@@ -65,7 +65,6 @@ class Voice(Resource):
 if __name__ == '__main__':
     parser = setup_args()
     SHARED['opt'] = parser.parse_args(print_args=False)
-    print(SHARED['opt'])
 
     SHARED['opt']['task'] = 'parlai.agents.local_human.local_human:LocalHumanAgent'
 

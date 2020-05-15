@@ -11,9 +11,15 @@ dict_lang = dict()
 dict_lang['fr'] = "fr-FR"
 dict_lang['en'] = "en-US"
 
-def speak(text, lang):
+def speak(text, lang, env):
+    urls = dict()
+    urls["windows"] = "C:/Users/scorp/Grafbot-c753fa94ac04.json"
+    urls["ubuntu"] = "/root/Grafbot/Grafbot-c753fa94ac04.json"
 
-    credentials = service_account.Credentials.from_service_account_file("C:/Users/scorp/Grafbot-c753fa94ac04.json")
+    path = dict()
+    path["windows"] = "web/"
+    path["ubuntu"] = "/root/Grafbot/app/web/"
+    credentials = service_account.Credentials.from_service_account_file(urls[env])
     # Instantiates a client
     client = texttospeech.TextToSpeechClient(credentials=credentials)
 
@@ -35,6 +41,6 @@ def speak(text, lang):
     response = client.synthesize_speech(synthesis_input, voice, audio_config)
 
     # The response's audio_content is binary.
-    with open('web/output.mp3', 'wb') as out:
+    with open(path[env]+'output.mp3', 'wb') as out:
         # Write the response to the output file.
         out.write(response.audio_content)
