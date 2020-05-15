@@ -1,4 +1,4 @@
-from flask import Flask, request, send_file
+from flask import Flask, request, send_file, jsonify
 from flask_restplus import Resource, Api
 from flask_cors import CORS, cross_origin
 from parlai.scripts.interactive import setup_args
@@ -12,13 +12,14 @@ import json
 import base64
 
 app = Flask(__name__)
+api = Api(app)
 CORS(app)
 
 #api = Api(app)
 
 SHARED: Dict[Any, Any] = {}
 
-@app.route('/interact')
+@api.route('/interact')
 class Interact(Resource):
     def _interactive_running(self, opt, reply_text):
         reply = {'episode_done': False, 'text': reply_text}
@@ -46,14 +47,17 @@ class Interact(Resource):
         processed_output = process_output_chatbot(json_value['text'], user_language)
         speak(processed_output, user_language)
         json_value.force_set('text', processed_output)
-        return json_value
+        return jsonify(json_value)
 
-@app.route('/reset')
+@api.route('/reset')
 class Reset(Resource):
     def post(self):
         SHARED['agent'].reset()
+        res = dict()
+        res['reset'] = 1
+        return jsonify(res)
 
-@app.route('/getVoice')
+@api.route('/getVoice')
 class Voice(Resource):
     def get(self):
         return send_file("web/output.mp3", as_attachment=True)
@@ -69,4 +73,4 @@ if __name__ == '__main__':
     agent = create_agent(SHARED.get('opt'), requireModelExists=True)
     SHARED['agent'] = agent
     SHARED['world'] = create_task(SHARED.get('opt'), SHARED['agent'])
-    app.run(host='185.157.246.81',port='5000', debug=True)
+    app.run(host='185.157.246.81', port='5000', debug=True)
