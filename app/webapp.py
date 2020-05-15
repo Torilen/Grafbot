@@ -60,7 +60,11 @@ class Reset(Resource):
 @api.route('/getVoice')
 class Voice(Resource):
     def get(self):
-        return send_file("web/output.mp3", as_attachment=True)
+         return send_file(
+         "web/output.mp3",
+         mimetype="audio/mp3",
+         as_attachment=True,
+         attachment_filename="output.mp3")
 
 if __name__ == '__main__':
     parser = setup_args()
