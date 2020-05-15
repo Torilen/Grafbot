@@ -5,9 +5,9 @@ from parlai.scripts.interactive import setup_args
 from parlai.core.agents import create_agent
 from parlai.core.worlds import create_task
 from typing import Dict, Any
-from .tools.Translator import translate, detect
-from .tools.VoiceSynthetiser import speak
-from .tools.Utils import process_output_chatbot
+from tools.Translator import translate, detect
+from tools.VoiceSynthetiser import speak
+from tools.Utils import process_output_chatbot
 import json
 import base64
 
