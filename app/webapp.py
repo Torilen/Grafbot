@@ -37,7 +37,7 @@ class Interact(Resource):
         )
         json_str = model_response
         if (user_language != "en"):
-            json_value = json.loads(json_str)
+            json_value = json_str
             print(json_value['text'])
             json_value['text'] = translate(json_value['text'], dest=user_language)
         else:
