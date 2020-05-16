@@ -39,7 +39,7 @@ class Interact(Resource):
         if (user_language != "en"):
             json_value = json_str
             print(json_value['text'])
-            json_value['text'] = translate(json_value['text'], dest=user_language)
+            json_value.force_set('text', translate(json_value['text'], dest=user_language))
         else:
             json_value = json_str
 
