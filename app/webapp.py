@@ -45,7 +45,7 @@ class Interact(Resource):
 
         # process text
         processed_output = process_output_chatbot(json_value['text'], user_language)
-        speak(processed_output, user_language, env)
+        # speak(processed_output, user_language, env)
         json_value.force_set('text', processed_output)
         return jsonify(json_value)
 
@@ -61,7 +61,7 @@ class Reset(Resource):
 class Voice(Resource):
     def get(self):
         with open("/root/Grafbot/app/web/output.mp3", "rb") as voice:
-            str = base64.b64encode(voice.read())
+            str = base64.b64encode(voice.read()).decode("utf-8")
         return str
 
 if __name__ == '__main__':
