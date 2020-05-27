@@ -3,9 +3,10 @@ numpy
 torch
 pytorch-ignite
 googletrans
-transformers==2.5.1
 tensorboardX==1.8
 tensorflow
 Flask
 Flask-RestPlus
 flask-cors
+flask
+flask-restplus
