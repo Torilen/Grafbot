@@ -33,20 +33,36 @@ Ici le projet repose sur les concepts de mémoire sémantique (la mémoire des f
 3) Envoyez un mail à aniss.bentebib@etu.univ-nantes.fr pour demander à être collaborateur/collaboratrice du projet. Par défaut nous acceptons tout le monde souhaitant apporter au projet.
 4) Une fois toutes les modifications apportées, revenez ici et cliquez sur le bouton "New Pull Request" pour envoyer vos modifications. Elles seront revues par des pairs et des modifications pourront vous être demandées.
 
-## Fonctionnement
-
+## Installation
+> sudo apt-update
+>
+> sudo apt install git
+>
 > git clone https://github.com/Torilen/Grafbot.git
 >
 > git clone https://github.com/facebookresearch/ParlAI.git
 >
+> sudo apt install curl (yes)
+>
+> curl -O https://repo.anaconda.com/archive/Anaconda3-2019.03-Linux-x86_64.sh
+>
+> bash Anaconda3-2019.03-Linux-x86_64.sh (Enter, Read, yes, Enter)
+>
 > conda install --force-reinstall -y -q --name grafbot -c conda-forge --file Grafbot/requirements.txt
+>
+> sudo apt-get install python-pip
 >
 > cd ParlAI
 >
 > python setup.py develop
 >
-> pip install transformers == 2.5.1
+> pip install transformers==2.5.1
 
+## Lancement
+
+>
+> python app/webapp.py
+>
 ## Datasets
 * [Cornell](https://www.cs.cornell.edu/~cristian/Cornell_Movie-Dialogs_Corpus.html) : Anglais, +220k conversations _(Génération de langage)_
 * [Ubuntu Dialog Corups](https://github.com/rkadlec/ubuntu-ranking-dataset-creator) : Anglais, _(Génération de langage)_
