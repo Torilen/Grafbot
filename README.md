@@ -61,7 +61,7 @@ Ici le projet repose sur les concepts de mémoire sémantique (la mémoire des f
 ## Lancement
 
 >
-> python app/webapp.py
+> python app/webapp.py -t blended_skill_talk -mf zoo:blender/blender_90M/model
 >
 ## Datasets
 * [Cornell](https://www.cs.cornell.edu/~cristian/Cornell_Movie-Dialogs_Corpus.html) : Anglais, +220k conversations _(Génération de langage)_
