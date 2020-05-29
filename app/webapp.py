@@ -75,7 +75,7 @@ class Voice(Resource):
 if __name__ == '__main__':
     parser = setup_args()
     SHARED['opt'] = parser.parse_args(print_args=True)
-    print(SHARED['opt'])
+    #print(SHARED['opt'])
     SHARED['opt']['task'] = 'parlai.agents.local_human.local_human:LocalHumanAgent'
 
     # Create model and assign it to the specified task
