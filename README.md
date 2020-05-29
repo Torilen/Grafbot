@@ -57,6 +57,8 @@ Ici le projet repose sur les concepts de mémoire sémantique (la mémoire des f
 > python setup.py develop
 >
 > pip install transformers==2.5.1
+>
+> pip install 'git+https://github.com/rsennrich/subword-nmt.git#egg=subword-nmt'
 
 ## Lancement
 
