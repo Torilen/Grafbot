@@ -5,7 +5,7 @@ from parlai.scripts.interactive import setup_args
 from parlai.core.agents import create_agent
 from parlai.core.worlds import create_task
 from typing import Dict, Any
-from tools.Translator import translate, detect
+from tools.Translator import translate, detect, translate_by_url
 from tools.VoiceSynthetiser import speak
 from tools.Utils import process_output_chatbot
 import json
@@ -36,17 +36,23 @@ class Interact(Resource):
             SHARED.get('opt'), english_version_of_user_input
         )
         json_str = model_response
+
+        # process text
+        processed_output = ""
+
         if (user_language != "en"):
             json_value = json_str
             print(json_value['text'])
+            json_value.force_set('text', process_output_chatbot(json_value['text'], user_language))
             json_value.force_set('text', translate(json_value['text'], dest=user_language))
+            json_value.force_set('text', processed_output)
         else:
             json_value = json_str
+            json_value.force_set('text', process_output_chatbot(json_value['text'], user_language))
+            json_value.force_set('text', processed_output)
 
-        # process text
-        processed_output = process_output_chatbot(json_value['text'], user_language)
         # speak(processed_output, user_language, env)
-        json_value.force_set('text', processed_output)
+        translate_by_url(json_value['text'], dest=user_language)
         return jsonify(json_value)
 
 @api.route('/reset')
