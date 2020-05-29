@@ -9,7 +9,7 @@ from tools.Translator import translate, detect, translate_by_url
 from tools.VoiceSynthetiser import speak
 from tools.Utils import process_output_chatbot
 from OpenSSL import SSL
-context = SSL.Context(SSL.PROTOCOL_TLSv1_2)
+context = SSL.Context(SSL.SSLv23_METHOD)
 context.use_privatekey_file('privateKey.key')
 context.use_certificate_file('certificate.crt')
 import json
