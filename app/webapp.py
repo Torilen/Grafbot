@@ -8,10 +8,9 @@ from typing import Dict, Any
 from tools.Translator import translate, detect, translate_by_url
 from tools.VoiceSynthetiser import speak
 from tools.Utils import process_output_chatbot
-from OpenSSL import SSL
-context = SSL.Context(SSL.SSLv23_METHOD)
-context.use_privatekey_file('privateKey.key')
-context.use_certificate_file('certificate.crt')
+import ssl
+context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
+context.load_cert_chain('certificate.crt', 'privateKey.key')
 import json
 import base64
 env = "ubuntu"
