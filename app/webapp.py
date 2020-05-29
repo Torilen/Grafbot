@@ -6,6 +6,7 @@ from parlai.core.agents import create_agent
 from parlai.core.worlds import create_task
 from typing import Dict, Any
 from tools.Translator import translate, detect, translate_by_url
+from parlai.agents.safe_local_human.safe_local_human import SafeLocalHumanAgent
 from tools.VoiceSynthetiser import speak
 from tools.Utils import process_output_chatbot
 import json
@@ -83,6 +84,7 @@ if __name__ == '__main__':
     parser.opt = agent.opt
     parser.print_args()
     SHARED['agent'] = agent
-    SHARED['world'] = create_task(SHARED.get('opt'), SHARED['agent'])
+    SHARED['human_agent'] = SafeLocalHumanAgent(SHARED.get('opt'))
+    SHARED['world'] = create_task(SHARED.get('opt'), [SHARED['human_agent'], SHARED['agent']])
     #print(SHARED)
     app.run(host='185.157.247.164', port='5000', debug=True)
