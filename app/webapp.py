@@ -82,7 +82,7 @@ if __name__ == '__main__':
     # Create model and assign it to the specified task
     agent = create_agent(SHARED.get('opt'), requireModelExists=True)
     print("Init agent : {}".format(agent))
-    agent.observe({'episode_done': False, 'text': 'your persona: My name is Bettana'})
+    agent.observe({'episode_done': False, 'text': 'your persona: My name is {NOM}\nyour persona: I\'m 25 years old'})
     SHARED['agent'] = agent
     SHARED['world'] = create_task(SHARED.get('opt'), SHARED['agent'])
     print(SHARED)
