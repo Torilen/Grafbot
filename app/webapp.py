@@ -52,7 +52,7 @@ class Interact(Resource):
             json_value.force_set('text', processed_output)
 
         # speak(processed_output, user_language, env)
-        translate_by_url(json_value['text'], dest=user_language)
+        # translate_by_url(json_value['text'], dest=user_language)
         return jsonify(json_value)
 
 @api.route('/reset')

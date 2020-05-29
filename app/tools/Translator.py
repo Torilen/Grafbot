@@ -3,7 +3,8 @@ from bs4 import BeautifulSoup
 import urllib
 
 def translate_by_url(text, src='en', dest='en'):
-    link = "https://translate.google.fr/?hl=fr#view=home&op=translate&sl="+src+"&tl="+dest+"&text="+text
+    link = "https://translate.google.fr/?hl=fr#view=home&client=gtx&op=translate&sl="+src+"&tl="+dest+"&text="+text
+    print(link)
     myfile = urllib.request.urlopen(link).read()
     soup = BeautifulSoup(myfile, "html")
     div = soup.find("span", {"class": "tlid-translation translation"})
@@ -19,3 +20,6 @@ def translate(text, src='en', dest='en'):
 def detect(text):
     translator = Translator()
     return translator.detect(text).lang
+
+if __name__ == '__main__':
+    translate_by_url("Hi how are you ?")
