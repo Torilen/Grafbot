@@ -8,6 +8,10 @@ from typing import Dict, Any
 from tools.Translator import translate, detect, translate_by_url
 from tools.VoiceSynthetiser import speak
 from tools.Utils import process_output_chatbot
+from OpenSSL import SSL
+context = SSL.Context(SSL.PROTOCOL_TLSv1_2)
+context.use_privatekey_file('privateKey.key')
+context.use_certificate_file('certificate.crt')
 import json
 import base64
 env = "ubuntu"
@@ -86,4 +90,4 @@ if __name__ == '__main__':
     SHARED['agent'] = agent
     SHARED['world'] = create_task(SHARED.get('opt'), SHARED['agent'])
     print(SHARED)
-    app.run(ssl_context=('cert.pem', 'key.pem'), host='185.157.247.164', debug=True)
+    app.run(ssl_context=context, host='185.157.247.164', debug=True)
