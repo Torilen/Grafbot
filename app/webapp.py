@@ -82,5 +82,5 @@ if __name__ == '__main__':
     agent = create_agent(SHARED.get('opt'), requireModelExists=True)
     SHARED['agent'] = agent
     SHARED['world'] = create_task(SHARED.get('opt'), SHARED['agent'])
-    print(SHARED)
+    #print(SHARED)
     app.run(host='185.157.247.164', port='5000', debug=True)
