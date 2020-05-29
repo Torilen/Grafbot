@@ -89,4 +89,4 @@ if __name__ == '__main__':
     SHARED['agent'] = agent
     SHARED['world'] = create_task(SHARED.get('opt'), SHARED['agent'])
     print(SHARED)
-    app.run(ssl_context=context, host='185.157.247.164', debug=True)
+    app.run(ssl_context='adhoc', host='185.157.247.164', debug=True)
