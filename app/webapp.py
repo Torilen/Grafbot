@@ -30,8 +30,9 @@ class Interact(Resource):
     def post(self):
         user_language = detect(request.form['data'])
         print("Language user detected : {}".format(user_language))
+        print("User base version : " + request.form['data'])
         english_version_of_user_input = translate(request.form['data'], src=user_language)
-        print(english_version_of_user_input)
+        print("User english version : "+english_version_of_user_input)
         model_response = self._interactive_running(
             SHARED.get('opt'), english_version_of_user_input
         )
@@ -42,14 +43,15 @@ class Interact(Resource):
 
         if (user_language != "en"):
             json_value = json_str
-            print(json_value['text'])
+            print("Bot english version : " + json_value['text'])
             json_value.force_set('text', process_output_chatbot(json_value['text'], user_language))
             json_value.force_set('text', translate(json_value['text'], dest=user_language))
-            json_value.force_set('text', processed_output)
+            print("Bot base version : " + json_value['text'])
         else:
             json_value = json_str
+            print("Bot english version : " + json_value['text'])
             json_value.force_set('text', process_output_chatbot(json_value['text'], user_language))
-            json_value.force_set('text', processed_output)
+
 
         # speak(processed_output, user_language, env)
         # translate_by_url(json_value['text'], dest=user_language)
