@@ -4,8 +4,7 @@ import urllib
 
 def translate_by_url(text, src='en', dest='en'):
     link = "https://translate.google.fr/?hl=fr#view=home&op=translate&sl="+src+"&tl="+dest+"&text="+text
-    f = urllib.urlopen(link)
-    myfile = f.read()
+    myfile = urllib.request.urlopen(link).read()
     soup = BeautifulSoup(myfile, "html")
     div = soup.find("span", {"class": "tlid-translation translation"})
 
