@@ -23,6 +23,7 @@ SHARED: Dict[Any, Any] = {}
 class Interact(Resource):
     def _interactive_running(self, opt, reply_text):
         reply = {'episode_done': False, 'text': reply_text}
+        print(SHARED['agent'])
         SHARED['agent'].observe(reply)
         model_res = SHARED['agent'].act()
         return model_res
