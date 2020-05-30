@@ -9,8 +9,8 @@ from tools.Translator import translate, detect, translate_by_url
 from tools.VoiceSynthetiser import speak
 from tools.Utils import process_output_chatbot
 import ssl
-context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
-context.load_cert_chain('certificate.crt', 'privateKey.key')
+#context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
+#context.load_cert_chain('certificate.crt', 'privateKey.key')
 import json
 import base64
 env = "ubuntu"
@@ -85,8 +85,8 @@ if __name__ == '__main__':
     # Create model and assign it to the specified task
     agent = create_agent(SHARED.get('opt'), requireModelExists=True)
     print("Init agent : {}".format(agent))
-    agent.observe({'episode_done': False, 'text': 'your persona: My name is <NOM>\nyour persona: I\'m 25 years old\nyour persona: My job is Fashion Advisor'})
+    agent.observe({'episode_done': False, 'text': 'your persona: My name is Bettana\nyour persona: I\'m 25 years old\nyour persona: My job is Fashion Advisor'})
     SHARED['agent'] = agent
     SHARED['world'] = create_task(SHARED.get('opt'), SHARED['agent'])
     print(SHARED)
-    app.run(ssl_context='adhoc', host='185.157.247.164', debug=True)
+    app.run(host='185.157.247.164', debug=True)
