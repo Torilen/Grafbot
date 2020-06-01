@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 from google.cloud import translate_v2 as translate
 from google.oauth2 import service_account
 import urllib
+import six
 
 def translate_by_url(text, src='en', dest='en'):
     link = "https://translate.google.fr/?hl=fr#view=home&client=gtx&op=translate&sl="+src+"&tl="+dest+"&text="+text
