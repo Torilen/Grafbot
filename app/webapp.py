@@ -49,7 +49,7 @@ class Interact(Resource):
             json_value = json_str
             print("Bot english version : " + json_value['text'])
             json_value.force_set('text', process_output_chatbot(json_value['text'], user_language))
-            json_value.force_set('text', translate_by_api(json_value['text'], env, dest=user_language).decode('utf-8'))
+            json_value.force_set('text', translate_by_api(json_value['text'], env, dest=user_language))
             print("Bot base version : " + json_value['text'])
         else:
             json_value = json_str

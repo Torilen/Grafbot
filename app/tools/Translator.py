@@ -31,9 +31,6 @@ def translate_by_api(text, env, src='en', dest='en'):
     credentials = service_account.Credentials.from_service_account_file(urls[env])
     translate_client = translate.Client(credentials=credentials)
 
-    if isinstance(text, six.binary_type):
-        text = text.decode('utf-8')
-
     # Text can also be a sequence of strings, in which case this method
     # will return a sequence of results for each text.
     result = translate_client.translate(
