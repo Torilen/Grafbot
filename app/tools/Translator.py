@@ -19,7 +19,7 @@ def translate(text, src='en', dest='en'):
     return translator.translate(text, src=src, dest=dest).text
 
 def translate_by_api(text, src='en', dest='en'):
-    translate_client = translate.Client()
+    translate_client = translate.Client("AIzaSyCf3b4hDbDAWSvM8hvVU_elfIzzJz3rmwU")
 
     if isinstance(text, six.binary_type):
         text = text.decode('utf-8')

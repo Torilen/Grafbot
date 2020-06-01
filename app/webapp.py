@@ -41,7 +41,7 @@ class Interact(Resource):
             SHARED.get('opt'), english_version_of_user_input
         )
         json_str = model_response
-        translate_by_api(request.form['data'])
+
         # process text
         processed_output = ""
 
@@ -56,7 +56,7 @@ class Interact(Resource):
             print("Bot english version : " + json_value['text'])
             json_value.force_set('text', process_output_chatbot(json_value['text'], user_language))
 
-
+        translate_by_api(json_str['text'])
         # speak(processed_output, user_language, env)
         # translate_by_url(json_value['text'], dest=user_language)
         return jsonify(json_value)
