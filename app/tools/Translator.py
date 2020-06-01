@@ -37,7 +37,7 @@ def translate_by_api(text, env, src='en', dest='en'):
     # Text can also be a sequence of strings, in which case this method
     # will return a sequence of results for each text.
     result = translate_client.translate(
-        text, target_language=dest)
+        text, target_language=dest, model="nmt")
 
     print(u'Text: {}'.format(result['input']))
     print(u'Translation: {}'.format(result['translatedText']))
