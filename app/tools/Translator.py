@@ -1,6 +1,7 @@
 from googletrans import Translator
 from bs4 import BeautifulSoup
 from google.cloud import translate_v2 as translate
+from google.oauth2 import service_account
 import urllib
 
 def translate_by_url(text, src='en', dest='en'):
@@ -18,8 +19,16 @@ def translate_base(text, src='en', dest='en'):
     translator = Translator()
     return translator.translate(text, src=src, dest=dest).text
 
-def translate_by_api(text, src='en', dest='en'):
-    translate_client = translate.Client("AIzaSyCf3b4hDbDAWSvM8hvVU_elfIzzJz3rmwU")
+def translate_by_api(text, env, src='en', dest='en'):
+    urls = dict()
+    urls["windows"] = "C:/Users/scorp/Grafbot-c753fa94ac04.json"
+    urls["ubuntu"] = "/root/Grafbot/Grafbot-c753fa94ac04.json"
+
+    path = dict()
+    path["windows"] = "web/"
+    path["ubuntu"] = "/root/Grafbot/app/web/"
+    credentials = service_account.Credentials.from_service_account_file(urls[env])
+    translate_client = translate.Client(credentials=credentials)
 
     if isinstance(text, six.binary_type):
         text = text.decode('utf-8')
