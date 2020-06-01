@@ -5,7 +5,7 @@ from parlai.scripts.interactive import setup_args
 from parlai.core.agents import create_agent
 from parlai.core.worlds import create_task
 from typing import Dict, Any
-from tools.Translator import translate, detect, translate_by_url
+from tools.Translator import translate, detect, translate_by_url, translate_by_api
 from tools.VoiceSynthetiser import speak
 from tools.Utils import process_output_chatbot
 import ssl
@@ -41,7 +41,7 @@ class Interact(Resource):
             SHARED.get('opt'), english_version_of_user_input
         )
         json_str = model_response
-
+        translate_by_api(request.form['data'])
         # process text
         processed_output = ""
 
@@ -85,7 +85,7 @@ if __name__ == '__main__':
     # Create model and assign it to the specified task
     agent = create_agent(SHARED.get('opt'), requireModelExists=True)
     print("Init agent : {}".format(agent))
-    agent.observe({'episode_done': False, 'text': 'your persona: My name is Bettana\nyour persona: I\'m 25 years old\nyour persona: My job is Fashion Advisor'})
+    agent.observe({'episode_done': False, 'text': 'your persona: My name is #name#\nyour persona: I\'m 25 years old\nyour persona: My job is Fashion Advisor'})
     SHARED['agent'] = agent
     SHARED['world'] = create_task(SHARED.get('opt'), SHARED['agent'])
     print(SHARED)

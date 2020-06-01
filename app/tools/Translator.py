@@ -1,5 +1,6 @@
 from googletrans import Translator
 from bs4 import BeautifulSoup
+from google.cloud import translate_v2 as translate
 import urllib
 
 def translate_by_url(text, src='en', dest='en'):
@@ -16,6 +17,23 @@ def translate_by_url(text, src='en', dest='en'):
 def translate(text, src='en', dest='en'):
     translator = Translator()
     return translator.translate(text, src=src, dest=dest).text
+
+def translate_by_api(text, src='en', dest='en'):
+    translate_client = translate.Client()
+
+    if isinstance(text, six.binary_type):
+        text = text.decode('utf-8')
+
+    # Text can also be a sequence of strings, in which case this method
+    # will return a sequence of results for each text.
+    result = translate_client.translate(
+        text, target_language=dest)
+
+    print(u'Text: {}'.format(result['input']))
+    print(u'Translation: {}'.format(result['translatedText']))
+    print(u'Detected source language: {}'.format(
+        result['detectedSourceLanguage']))
+    return result['translatedText']
 
 def detect(text):
     translator = Translator()

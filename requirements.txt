@@ -9,5 +9,6 @@ Flask
 Flask-RestPlus
 flask-cors
 flask
+google-cloud
 google-cloud-texttospeech
 flask-restplus
