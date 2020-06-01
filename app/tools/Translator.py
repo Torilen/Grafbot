@@ -14,7 +14,7 @@ def translate_by_url(text, src='en', dest='en'):
 
     print("Le contenu de la traduction est : {}".format(content))
 
-def __translate(text, src='en', dest='en'):
+def translate_base(text, src='en', dest='en'):
     translator = Translator()
     return translator.translate(text, src=src, dest=dest).text
 

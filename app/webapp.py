@@ -5,7 +5,7 @@ from parlai.scripts.interactive import setup_args
 from parlai.core.agents import create_agent
 from parlai.core.worlds import create_task
 from typing import Dict, Any
-from tools.Translator import __translate, detect, translate_by_url, translate_by_api
+from tools.Translator import translate_base, detect, translate_by_url, translate_by_api
 from tools.VoiceSynthetiser import speak
 from tools.Utils import process_output_chatbot
 import ssl
@@ -35,7 +35,7 @@ class Interact(Resource):
         user_language = detect(request.form['data'])
         print("Language user detected : {}".format(user_language))
         print("User base version : " + request.form['data'])
-        english_version_of_user_input = __translate(request.form['data'], src=user_language)
+        english_version_of_user_input = translate_base(request.form['data'], src=user_language)
         print("User english version : "+english_version_of_user_input)
         model_response = self._interactive_running(
             SHARED.get('opt'), english_version_of_user_input
@@ -49,7 +49,7 @@ class Interact(Resource):
             json_value = json_str
             print("Bot english version : " + json_value['text'])
             json_value.force_set('text', process_output_chatbot(json_value['text'], user_language))
-            json_value.force_set('text', __translate(json_value['text'], dest=user_language))
+            json_value.force_set('text', translate_base(json_value['text'], dest=user_language))
             print("Bot base version : " + json_value['text'])
         else:
             json_value = json_str
