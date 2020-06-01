@@ -49,7 +49,7 @@ class Interact(Resource):
             json_value = json_str
             print("Bot english version : " + json_value['text'])
             json_value.force_set('text', process_output_chatbot(json_value['text'], user_language))
-            json_value.force_set('text', translate_by_api(json_value['text'], env, dest=user_language))
+            json_value.force_set('text', translate_by_api(json_value['text'], env, dest=user_language).encode('utf-8'))
             print("Bot base version : " + json_value['text'])
         else:
             json_value = json_str
@@ -85,7 +85,7 @@ if __name__ == '__main__':
     # Create model and assign it to the specified task
     agent = create_agent(SHARED.get('opt'), requireModelExists=True)
     print("Init agent : {}".format(agent))
-    agent.observe({'episode_done': False, 'text': 'your persona: My name is 1\nyour persona: I\'m 25 years old\nyour persona: My job is 2'})
+    agent.observe({'episode_done': False, 'text': 'your persona: My name is {n}\nyour persona: I\'m 25 years old\nyour persona: {j}'})
     SHARED['agent'] = agent
     SHARED['world'] = create_task(SHARED.get('opt'), SHARED['agent'])
     print(SHARED)
