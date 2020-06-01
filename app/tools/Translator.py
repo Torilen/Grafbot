@@ -1,6 +1,6 @@
 from googletrans import Translator
 from bs4 import BeautifulSoup
-from google.cloud import translate_v2 as translate
+from google.cloud import translate
 import urllib
 
 def translate_by_url(text, src='en', dest='en'):
