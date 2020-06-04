@@ -8,7 +8,7 @@ from typing import Dict, Any
 from tools.Translator import translate_base, detect, translate_by_url, translate_by_api
 from tools.VoiceSynthetiser import speak
 from tools.Utils import process_output_chatbot
-from structure import GrafbotAgent
+from structure.GrafbotAgent import GrafbotAgent
 import ssl
 #context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
 #context.load_cert_chain('certificate.crt', 'privateKey.key')
