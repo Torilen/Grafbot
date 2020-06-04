@@ -8,6 +8,7 @@ from typing import Dict, Any
 from tools.Translator import translate_base, detect, translate_by_url, translate_by_api
 from tools.VoiceSynthetiser import speak
 from tools.Utils import process_output_chatbot
+from structure import GrafbotAgent
 import ssl
 #context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
 #context.load_cert_chain('certificate.crt', 'privateKey.key')
@@ -26,19 +27,20 @@ SHARED: Dict[Any, Any] = {}
 class Interact(Resource):
     def _interactive_running(self, opt, reply_text):
         reply = {'episode_done': False, 'text': reply_text}
-        print(SHARED['agent'])
-        SHARED['agent'].observe(reply)
-        model_res = SHARED['agent'].act()
+        SHARED[request.remote_addr].get('agent').observe(reply)
+        model_res = SHARED[request.remote_addr].get('agent').act()
         return model_res
 
     def post(self):
+        if(not request.remote_addr in list(SHARED.keys())):
+            SHARED[request.remote_addr] = GrafbotAgent(["My name is Bettana", "I\'m 25 years old", "I\'m a fashion advisor", "I\'m vegan", "My cat can kill a dog"])
         user_language = detect(request.form['data'])
         print("Language user detected : {}".format(user_language))
         print("User base version : " + request.form['data'])
         english_version_of_user_input = translate_base(request.form['data'], src=user_language)
         print("User english version : "+english_version_of_user_input)
         model_response = self._interactive_running(
-            SHARED.get('opt'), english_version_of_user_input
+            SHARED[request.remote_addr].get('opt'), english_version_of_user_input
         )
         json_str = model_response
 
@@ -64,29 +66,10 @@ class Interact(Resource):
 @api.route('/reset')
 class Reset(Resource):
     def post(self):
-        SHARED['agent'].reset()
+        SHARED[request.remote_addr].get('agent').reset()
         res = dict()
         res['reset'] = 1
         return jsonify(res)
 
-@api.route('/getVoice')
-class Voice(Resource):
-    def get(self):
-        with open("/root/Grafbot/app/web/output.mp3", "rb") as voice:
-            str = base64.b64encode(voice.read()).decode("utf-8")
-        return str
-
 if __name__ == '__main__':
-    parser = setup_args()
-    SHARED['opt'] = parser.parse_args(print_args=False)
-
-    SHARED['opt']['task'] = 'parlai.agents.local_human.local_human:LocalHumanAgent'
-
-    # Create model and assign it to the specified task
-    agent = create_agent(SHARED.get('opt'), requireModelExists=True)
-    print("Init agent : {}".format(agent))
-    agent.observe({'episode_done': False, 'text': 'your persona: My name is Bettana \nyour persona: I\'m 25 years old \nyour persona: I\'m a fashion advisor \nyour persona: I\'m vegan \nyour persona: My cat can kill a dog'})
-    SHARED['agent'] = agent
-    SHARED['world'] = create_task(SHARED.get('opt'), SHARED['agent'])
-    print(SHARED)
     app.run(host='185.157.247.164', debug=True)
