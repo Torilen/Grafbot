@@ -83,10 +83,26 @@ def process_output_chatbot(text, lang):
         else:
             textSplitted[i] = textSplitted[i][0:1].upper() + textSplitted[i][1:]
     text = ".".join(textSplitted)
+    textSplitted = text.split('?')
+    for i in range(len(textSplitted)):
+        if(textSplitted[i][0:1] == " "):
+            textSplitted[i] = " "+textSplitted[i][1:2].upper() + textSplitted[i][2:]
+        else:
+            textSplitted[i] = textSplitted[i][0:1].upper() + textSplitted[i][1:]
+    text = ".".join(textSplitted)
+    textSplitted = text.split('!')
+    for i in range(len(textSplitted)):
+        if (textSplitted[i][0:1] == " "):
+            textSplitted[i] = " " + textSplitted[i][1:2].upper() + textSplitted[i][2:]
+        else:
+            textSplitted[i] = textSplitted[i][0:1].upper() + textSplitted[i][1:]
+    text = ".".join(textSplitted)
 
     question = random.randint(0, 2)
     if(question == 0):
         text = text.split('.')
         textWithoutQuestion = ["" if "?" in sentence else sentence for sentence in text]
         text = ".".join(textWithoutQuestion)
+
+    text = text.replace("&#39;", "'")
     return text
