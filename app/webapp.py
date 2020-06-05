@@ -26,24 +26,28 @@ class Interact(Resource):
 
     def post(self):
         if(not request.remote_addr in list(SHARED.keys())):
-            SHARED[request.remote_addr] = GrafbotAgent(personality = ["My name is Bettana",
-                                                        "I\'m 25 years old",
-                                                        "I\'m a fashion advisor",
-                                                        "I\'m vegan",
-                                                        "My cat can kill a dog"])
-        return SHARED[request.remote_addr].speak(request.form['data'])
+            res = dict()
+            res['error'] = "You have to create an agent before"
+            return jsonify(res)
+        else:
+            return SHARED[request.remote_addr].speak(request.form['data'])
 
 @api.route('/createAgent')
 class CreateAgent(Resource):
     def post(self):
         persona = json.loads(request.form['data'])
-        print(persona)
-        '''if (not request.remote_addr in list(SHARED.keys())):
-            SHARED[request.remote_addr] = GrafbotAgent(personality=["My name is Bettana",
-                                                                    "I\'m 25 years old",
-                                                                    "I\'m a fashion advisor",
-                                                                    "I\'m vegan",
-                                                                    "My cat can kill a dog"])'''
+        SHARED[request.remote_addr] = GrafbotAgent(personality=persona)
+        if (not request.remote_addr in list(SHARED.keys())):
+            res = dict()
+            res['creation'] = 1
+            return jsonify(res)
+        else:
+            res = dict()
+            res['creation'] = 2
+            return jsonify(res)
+        res = dict()
+        res['creation'] = 0
+        return jsonify(res)
 
 @api.route('/reset')
 class Reset(Resource):
