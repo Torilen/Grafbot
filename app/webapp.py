@@ -5,6 +5,7 @@ from typing import Dict, Any
 
 from tools.Utils import process_output_chatbot
 from structure.GrafbotAgent import GrafbotAgent
+import json
 
 env = "ubuntu"
 app = Flask(__name__)
@@ -31,6 +32,18 @@ class Interact(Resource):
                                                         "I\'m vegan",
                                                         "My cat can kill a dog"])
         return SHARED[request.remote_addr].speak(request.form['data'])
+
+@api.route('/createAgent')
+class CreateAgent(Resource):
+    def post(self):
+        persona = json.loads(request.form['data'])
+        print(persona)
+        '''if (not request.remote_addr in list(SHARED.keys())):
+            SHARED[request.remote_addr] = GrafbotAgent(personality=["My name is Bettana",
+                                                                    "I\'m 25 years old",
+                                                                    "I\'m a fashion advisor",
+                                                                    "I\'m vegan",
+                                                                    "My cat can kill a dog"])'''
 
 @api.route('/reset')
 class Reset(Resource):
