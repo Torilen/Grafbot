@@ -36,6 +36,7 @@ class Interact(Resource):
 class CreateAgent(Resource):
     def post(self):
         persona = json.loads(request.form['data'])
+        print(persona)
         SHARED[request.remote_addr] = GrafbotAgent(personality=persona)
         if (not request.remote_addr in list(SHARED.keys())):
             res = dict()
