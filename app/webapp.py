@@ -37,7 +37,7 @@ class CreateAgent(Resource):
     def post(self):
         persona = json.loads(request.form['data'])
         print(persona)
-        shared_temp = SHARED.deepcopy()
+        shared_temp = SHARED.copy()
         SHARED[request.remote_addr] = GrafbotAgent(personality=persona)
         if (request.remote_addr not in list(shared_temp.keys())):
             res = dict()
