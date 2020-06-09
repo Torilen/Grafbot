@@ -38,7 +38,7 @@ class CreateAgent(Resource):
         persona = json.loads(request.form['data'])
         print(persona)
         SHARED[request.remote_addr] = GrafbotAgent(personality=persona)
-        if (not request.remote_addr in list(SHARED.keys())):
+        if (request.remote_addr not in list(SHARED.keys())):
             res = dict()
             res['creation'] = 1
             return jsonify(res)
