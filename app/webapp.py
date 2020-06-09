@@ -59,4 +59,6 @@ class Reset(Resource):
         return jsonify(res)
 
 if __name__ == '__main__':
+    SHARED = {}
     app.run(host='185.157.247.164', debug=True)
+
