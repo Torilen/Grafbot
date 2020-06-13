@@ -28,7 +28,8 @@ class Interact(Resource):
     def post(self):
         if(not request.remote_addr in list(SHARED.keys())):
             res = dict()
-            res['error'] = "You have to create an agent before"
+            res['text'] = "You have to define me before"
+            res['user_lang'] = "en"
             return jsonify(res)
         else:
             return SHARED[request.remote_addr].speak(request.form['data'])
