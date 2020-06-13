@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from flask_restplus import Resource, Api
 from flask_cors import CORS
 from typing import Dict, Any
+import threading
 
 from tools.Utils import process_output_chatbot
 from structure.GrafbotAgent import GrafbotAgent
@@ -30,7 +31,10 @@ class Interact(Resource):
             res['error'] = "You have to create an agent before"
             return jsonify(res)
         else:
-            return SHARED[request.remote_addr].speak(request.form['data'])
+            th = threading.Thread(target=SHARED[request.remote_addr].speak, args=(request.form['data']))
+            th.start()
+            th.join()
+            return th
 
 @api.route('/createAgent')
 class CreateAgent(Resource):
