@@ -31,12 +31,7 @@ class Interact(Resource):
             res['error'] = "You have to create an agent before"
             return jsonify(res)
         else:
-            res = []
-            # do some other stuff in the main process
-            th = Thread(target=SHARED[request.remote_addr].speak, args=(request.form['data'], res))
-            th.start()
-            th.join()
-            return res
+            return SHARED[request.remote_addr].speak(request.form['data'])
 
 @api.route('/createAgent')
 class CreateAgent(Resource):
@@ -67,5 +62,5 @@ class Reset(Resource):
             return jsonify(res)
 
 if __name__ == '__main__':
-    app.run(host='185.157.247.164', debug=True)
+    app.run(host='185.157.247.164', debug=True, threaded=True)
 
