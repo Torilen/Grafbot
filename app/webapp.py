@@ -54,10 +54,11 @@ class CreateAgent(Resource):
 @api.route('/reset')
 class Reset(Resource):
     def post(self):
-        SHARED[request.remote_addr].get('agent').reset()
-        res = dict()
-        res['reset'] = 1
-        return jsonify(res)
+        if (request.remote_addr in list(SHARED.keys())):
+            SHARED[request.remote_addr].get('agent').reset()
+            res = dict()
+            res['reset'] = 1
+            return jsonify(res)
 
 if __name__ == '__main__':
     app.run(host='185.157.247.164', debug=True)

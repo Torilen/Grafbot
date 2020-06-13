@@ -36,6 +36,7 @@ class GrafbotAgent:
         else:
             json_return['text'] = process_output_chatbot(model_res['text'], user_language)
 
+        json_return['user_lang'] = user_language
         return jsonify(json_return)
 
     def get(self, val):
