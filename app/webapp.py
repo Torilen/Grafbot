@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 from flask_restplus import Resource, Api
 from flask_cors import CORS
 from typing import Dict, Any
-from multiprocessing.pool import ThreadPool
+from threading import Thread
 
 from tools.Utils import process_output_chatbot
 from structure.GrafbotAgent import GrafbotAgent
@@ -31,13 +31,12 @@ class Interact(Resource):
             res['error'] = "You have to create an agent before"
             return jsonify(res)
         else:
-            pool = ThreadPool(processes=1)
-
-            async_result = pool.apply_async(SHARED[request.remote_addr].speak, (request.form['data']))  # tuple of args for foo
-
+            res = []
             # do some other stuff in the main process
-
-            return async_result.get()
+            th = Thread(target=SHARED[request.remote_addr].speak, args=(request.form['data'], res))
+            th.start()
+            th.join()
+            return res
 
 @api.route('/createAgent')
 class CreateAgent(Resource):

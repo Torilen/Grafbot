@@ -19,7 +19,7 @@ class GrafbotAgent:
         self.agent.observe({'episode_done': False, 'text': personalityText})
         self.world = create_task(self.opt, self.agent)
 
-    def speak(self, reply_text):
+    def speak(self, reply_text, res):
         user_language = detect(reply_text)
 
         english_version_of_user_input = translate_base(reply_text, src=user_language)
@@ -37,7 +37,7 @@ class GrafbotAgent:
             json_return['text'] = process_output_chatbot(model_res['text'], user_language)
 
         json_return['user_lang'] = user_language
-        return jsonify(json_return)
+        res = jsonify(json_return)
 
     def get(self, val):
         if val == 'opt':
