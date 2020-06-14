@@ -11,8 +11,8 @@ from structure.GrafbotAgent import GrafbotAgent
 import json
 
 context = SSL.Context(SSL.SSLv23_METHOD)
-cer = os.path.join(os.path.dirname(__file__), 'resources/grafbot.com.crt')
-key = os.path.join(os.path.dirname(__file__), 'resources/grafbot.com.key')
+cer = '../grafbot.com.crt'
+key = '../grafbot.com.key'
 
 env = "ubuntu"
 app = Flask(__name__)
