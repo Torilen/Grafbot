@@ -63,5 +63,5 @@ class Reset(Resource):
             return jsonify(res)
 
 if __name__ == '__main__':
-    app.run(host='185.157.247.164', debug=True, threaded=True)
+    app.run(host='185.157.247.164', ssl_context='adhoc', debug=True, threaded=True)
 
