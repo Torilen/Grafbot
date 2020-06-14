@@ -3,10 +3,16 @@ from flask_restplus import Resource, Api
 from flask_cors import CORS
 from typing import Dict, Any
 from threading import Thread
+from OpenSSL import SSL
+import os
 
 from tools.Utils import process_output_chatbot
 from structure.GrafbotAgent import GrafbotAgent
 import json
+
+context = SSL.Context(SSL.SSLv23_METHOD)
+cer = os.path.join(os.path.dirname(__file__), 'resources/grafbot.com.crt')
+key = os.path.join(os.path.dirname(__file__), 'resources/grafbot.com.key')
 
 env = "ubuntu"
 app = Flask(__name__)
@@ -63,5 +69,6 @@ class Reset(Resource):
             return jsonify(res)
 
 if __name__ == '__main__':
-    app.run(host='185.157.247.164', ssl_context='adhoc', debug=True, threaded=True)
+    context = (cer, key)
+    app.run(host='185.157.247.164', ssl_context=context, debug=True, threaded=True)
 
