@@ -4,6 +4,7 @@ from flask_cors import CORS
 from typing import Dict, Any
 from threading import Thread
 from OpenSSL import SSL
+from werkzeug.middleware.proxy_fix import ProxyFix
 import os
 
 from tools.Utils import process_output_chatbot
@@ -16,6 +17,7 @@ key = 'grafbot.com.key'
 
 env = "ubuntu"
 app = Flask(__name__)
+app.wsgi_app = ProxyFix(app.wsgi_app)
 api = Api(app)
 CORS(app)
 
