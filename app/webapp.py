@@ -70,5 +70,5 @@ class Reset(Resource):
 
 if __name__ == '__main__':
     context = (cer, key)
-    app.run(host='185.157.247.164', ssl_context=context, debug=True, threaded=True)
+    app.run(host='185.157.247.164', debug=True, threaded=True)
 
