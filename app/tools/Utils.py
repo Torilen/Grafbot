@@ -10,7 +10,7 @@ import tempfile
 import re
 import socket
 import random
-
+import html
 import torch
 
 from transformers import cached_path
@@ -105,4 +105,5 @@ def process_output_chatbot(text, lang):
         text = ".".join(textWithoutQuestion)
 
     text = text.replace("&#39;", "'")
+    text = html.unescape(text)
     return text
