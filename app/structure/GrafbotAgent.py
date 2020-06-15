@@ -4,12 +4,18 @@ from parlai.core.agents import create_agent
 from parlai.core.worlds import create_task
 from tools.Translator import translate_base, detect, translate_by_url, translate_by_api
 from tools.Utils import process_output_chatbot
+from tools.EntityExtractor import get_entities
+from tools.Converter import Entities2Tuples
+from structure.SemKG import SemKG
+from structure.EpiKG import EpiKG
 
 class GrafbotAgent:
     parser = setup_args()
     opt = None
     agent = None
     world = None
+    semkg = SemKG()
+    epikg = EpiKG()
 
     def __init__(self, personality):
         self.opt = self.parser.parse_args(print_args=False)
@@ -23,7 +29,8 @@ class GrafbotAgent:
         user_language = detect(reply_text)
 
         english_version_of_user_input = translate_base(reply_text, src=user_language)
-
+        entities = get_entities(english_version_of_user_input)
+        self.semkg.get_stories(self.epikg, [x[0] for x in entities])
         reply = {'episode_done': False, 'text': english_version_of_user_input}
         self.get('agent').observe(reply)
         model_res = self.get('agent').act()

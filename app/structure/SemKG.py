@@ -55,4 +55,4 @@ class SemKG:
 
     def get_stories(self, epikg, entities, top_n=5, steps=5):
         stories = epikg.get_stories([self.graphNodeId[e] for e in entities], top_n, steps)
-        return 0
+        return stories

@@ -94,7 +94,7 @@ class EpiKG:
 
         stories = pd.DataFrame(graph_content_stories, columns=["s", "o", "p", "time", "distance"]).sort_values(by=['time'])
 
-        print(stories)
+        #print(stories)
 
         self.classify_stories_zone(stories)
 
