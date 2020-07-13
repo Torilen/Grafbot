@@ -73,18 +73,20 @@ class SemKG:
             self.add_relation(s[0], o[0])
             epikg.add_relation(self.graphNodeId[s[0]], self.graphNodeId[o[0]], input, s[1], o[1])
 
-    def get_all_nodes_in_neighbour(self, entity, exp):
+    def get_all_nodes_in_neighbour(self, entity):
         neighbour = self.graphNeighbour[entity]
         weights = [self.graph[(entity, n)] for n in neighbour]
         res = []
-        for i in range(exp):
+
+        for j in range(min(3, len(weights))):
             index_max = np.argmax(weights)
-            res.append(neighbour[index_max])
+            res.append([neighbour[index_max], weights[index_max]])
             weights[index_max] = 0
+
         return res
 
-    def semantic_propagation(self, entity, steps, i, exp):
-        childs = self.get_all_nodes_in_neighbour(entity, exp)
+    def semantic_propagation(self, entity, steps, i):
+        childs = self.get_all_nodes_in_neighbour(entity)
         l = list()
         for child in childs:
             l.append([entity, child[0], child[1], self.graph_a_pointed_b[child[1]][entity][child[0]], len(child[1].split())])

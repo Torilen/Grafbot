@@ -20,7 +20,6 @@ def get_good_words(sentence_tagged):
         if(entity[1] in entity_tag):
             i.append([entity[0], index_word])
         index_word+=1
-
     return i
 
 def get_entities(sentence):
