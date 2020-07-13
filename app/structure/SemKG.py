@@ -1,14 +1,16 @@
 import json
+import numpy as np
 
 class SemKG:
     graph = dict()
     graphNodeId = dict()
+    graphNeighbour = dict()
 
     def get_occur_relation(self, s, o):
         return self.graph[(s, o)]
 
     def get_graph(self):
-        return {"graph": self.graph, "nodesId": self.graphNodeId}
+        return {"graph": self.graph, "nodesId": self.graphNodeId, "successor": self.graphSuccessor}
 
     def to_json(self):
         return json.dumps(self.get_graph())
@@ -27,7 +29,10 @@ class SemKG:
             self.graphNodeId[node] = len(list(self.graphNodeId.keys()))+1
 
     def get_node_id(self, node):
-        return self.graphNodeId[node]
+        if node in list(self.graphNodeId.keys()):
+            return self.graphNodeId[node]
+        else:
+            return -1
 
     def add_relation(self, s, o):
         self.add_node(s)
@@ -39,10 +44,25 @@ class SemKG:
                 self.graph[(o, s)] = 1
             else:
                 self.graph[(o, s)] += 1
-                self.graph[(s, o)] = self.graph[(s, o)]
+                self.graph[(s, o)] = self.graph[(o, s)]
         else:
             self.graph[(s, o)] += 1
             self.graph[(o, s)] = self.graph[(s, o)]
+
+        if s in list(self.graphNeighbour.keys()):
+            if o not in self.graphNeighbour[s]:
+                self.graphNeighbour[s].append(o)
+        else:
+            self.graphNeighbour[s] = list()
+            self.graphNeighbour[s].append(o)
+
+        if o in list(self.graphNeighbour.keys()):
+            if s not in self.graphNeighbour[o]:
+                self.graphNeighbour[o].append(s)
+        else:
+            self.graphNeighbour[o] = list()
+            self.graphNeighbour[o].append(s)
+
 
     def add_relations(self, rels, epikg, input):
         for rel in rels:
@@ -53,6 +73,34 @@ class SemKG:
             self.add_relation(s[0], o[0])
             epikg.add_relation(self.graphNodeId[s[0]], self.graphNodeId[o[0]], input, s[1], o[1])
 
+    def get_all_nodes_in_neighbour(self, entity, exp):
+        neighbour = self.graphNeighbour[entity]
+        weights = [self.graph[(entity, n)] for n in neighbour]
+        res = []
+        for i in range(exp):
+            index_max = np.argmax(weights)
+            res.append(neighbour[index_max])
+            weights[index_max] = 0
+        return res
+
+    def semantic_propagation(self, entity, steps, i, exp):
+        childs = self.get_all_nodes_in_neighbour(entity, exp)
+        l = list()
+        for child in childs:
+            l.append([entity, child[0], child[1], self.graph_a_pointed_b[child[1]][entity][child[0]], len(child[1].split())])
+        for child in childs:
+            if(i < steps):
+                l = l+self.semantic_propagation(child[0], steps, i+1)
+            else:
+                return l
+        return l
+
     def get_stories(self, epikg, entities, top_n=5, steps=5):
-        stories = epikg.get_stories([self.graphNodeId[e] for e in entities], top_n, steps)
+        graph_nodes_neighbours = list()
+        for e in entities:
+            propa = self.semantic_propagation(e, steps, 0)
+            for s in propa:
+                if(s not in graph_nodes_neighbours):
+                    graph_nodes_neighbours.append(s)
+        stories = epikg.get_stories([self.graphNodeId[e] for e in entities+graph_nodes_neighbours], top_n, steps)
         return stories
