@@ -48,9 +48,13 @@ Ici le projet repose sur les concepts de mémoire sémantique (la mémoire des f
 >
 > bash Anaconda3-2019.03-Linux-x86_64.sh (Enter, Read, yes, Enter)
 >
-> conda install --force-reinstall -y -q --name grafbot -c conda-forge --file Grafbot/requirements.txt
+> sudo reboot
 >
-> sudo apt-get install python-pip
+> conda create --name grafbot
+>
+> conda install pip
+>
+> pip install -r requirements.txt
 >
 > cd ParlAI
 >
@@ -59,6 +63,14 @@ Ici le projet repose sur les concepts de mémoire sémantique (la mémoire des f
 > pip install transformers==2.5.1
 >
 > pip install 'git+https://github.com/rsennrich/subword-nmt.git#egg=subword-nmt'
+>
+> pip install werkzeug==0.16.1
+>
+> pip install pyOpenSSL
+>
+> pip install pyOpenSSL
+>
+> pip install BeautifulSoup4
 
 ## Lancement
 
