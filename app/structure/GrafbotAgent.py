@@ -32,9 +32,9 @@ class GrafbotAgent:
         user_language = detect(reply_text)
 
         english_version_of_user_input = translate_base(reply_text, src=user_language)
-        entities = get_entities(english_version_of_user_input)
-        stories = self.semkg.get_stories(self.epikg, [x[0] for x in entities])
-        print(stories)
+        #entities = get_entities(english_version_of_user_input)
+        #stories = self.semkg.get_stories(self.epikg, [x[0] for x in entities])
+        #print(stories)
         reply = {'episode_done': False, 'text': english_version_of_user_input}
         self.get('agent').observe(reply)
         model_res = self.get('agent').act()
