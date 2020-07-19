@@ -71,7 +71,45 @@ Ici le projet repose sur les concepts de mémoire sémantique (la mémoire des f
 > pip install pyOpenSSL
 >
 > pip install BeautifulSoup4
+>
+> python
+> import nltk
+> nltk.download('punkt')
 
+
+## Configuration HTTPS
+> sudo apt-get update
+>
+> sudo apt-get install software-properties-common
+>
+> sudo add-apt-repository universe
+>
+> sudo add-apt-repository ppa:certbot/certbot
+>
+> sudo apt-get update 
+>
+> sudo apt-get install certbot python3-certbot-nginx
+>
+> sudo nano /etc/nginx/sites-enabled/app-grafbot
+
+>Remplir avec
+> server {
+>   listen 80;
+>   server_name app.grafbot.com;
+>   location /static {
+>       alias /root/Grafbot/app/static;
+>   }
+>   location / {
+>       proxy_pass http://127.0.0.1:5000;
+>       include /etc/nginx/proxy_params;
+>       proxy_redirect off;
+>   }  }
+>
+> sudo certbot --nginx
+>
+> sudo ufw allow https
+>
+> sudo systemctl restart nginx
 ## Lancement
 
 >
