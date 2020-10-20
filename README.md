@@ -9,7 +9,7 @@
     <img alt="Maintenance" src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" />
   </a>
   <a href="https://github.com/Torilen/Grafbot/blob/master/LICENSE" target="_blank">
-    <img alt="License: CCA NCND 4.0" src="https://img.shields.io/github/license/Torilen/Grafbot" />
+    <img alt="License: CC BY-NC-ND 4.0" src="https://img.shields.io/badge/License-CC%20BY--NC--ND%204.0-lightgrey.svg" />
   </a>
 </p>
 
