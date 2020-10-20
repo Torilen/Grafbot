@@ -17,7 +17,7 @@
 
 ## Grafbot ?
 
-Grafbot est une initiative étudiante de recherche Nantaise en traitement automatique du langage. L'idée qui se cache derrière ce projet est de pouvoir créer, imaginer, œuvrer ensemble à la réalisation d'un outil de manière complétement indépendante et participative.  
+Grafbot est une initiative étudiante de recherche Nantaise en traitement automatique du langage. L'idée qui se cache derrière ce projet est de pouvoir créer, imaginer, œuvrer à la réalisation d'un outil de manière complétement indépendante et participative.  
 
 Plus concrètement, Grafbot est un outil de traitement du langage basé sur des structures de données à base de graphe. S'il est question de graphe c'est parce qu'il est question d'implémentation de stockage d'information sémantique. Pour être précis, Grafbot est une initiative de recherche cherchant à mesurer l'efficacité de systèmes "intelligents" conciliant des domaines comme les neurosciences, la psychologie cognitive, l'informatique (machine learning), etc.
 
