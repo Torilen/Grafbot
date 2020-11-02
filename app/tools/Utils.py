@@ -69,7 +69,7 @@ def make_logdir(model_name: str):
         'runs', current_time + '_' + socket.gethostname() + '_' + model_name)
     return logdir
 
-def process_output_chatbot(text, lang):
+def process_output_chatbot(text):
     #maj sur la première lettre
     text = text[0:1].upper()+text[1:]
     #ponctuation mal placée

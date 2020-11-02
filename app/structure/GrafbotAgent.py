@@ -41,7 +41,7 @@ class GrafbotAgent:
     def speak(self, reply_text):
         print("Reply : "+reply_text)
         #user_language = detect(reply_text)
-
+        user_language = "en"
         #english_version_of_user_input = translate_base(reply_text, src=user_language)
         english_version_of_user_input = reply_text
         entities = get_entities(english_version_of_user_input)
@@ -56,10 +56,10 @@ class GrafbotAgent:
         json_return = dict()
 
         if (user_language != "en"):
-            json_return['text'] = process_output_chatbot(model_res['text'], user_language)
+            json_return['text'] = process_output_chatbot(model_res['text'])
             json_return['text'] = translate_by_api(json_return['text'], "ubuntu", dest=user_language)
         else:
-            json_return['text'] = process_output_chatbot(model_res['text'], user_language)
+            json_return['text'] = process_output_chatbot(model_res['text'])
 
         json_return['user_lang'] = user_language
         return jsonify(json_return)
