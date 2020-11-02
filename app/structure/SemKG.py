@@ -91,13 +91,13 @@ class SemKG:
 
     def semantic_propagation(self, entity, steps, i):
         childs = self.get_all_nodes_in_neighbour(entity)
-        print(childs)
+        print("CHILDS: "+childs)
         l = list(entity)
         for child in childs:
             # child[0] => entity | #child[1] => weight
             l.append(child[0])
             print(child[0])
-        print(l)
+        print("L: "+l)
         for child in childs:
             if(i < steps):
                 res_t = self.semantic_propagation(child[0], steps, i+1)
