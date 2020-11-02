@@ -91,7 +91,7 @@ class SemKG:
 
     def semantic_propagation(self, entity, steps, i):
         childs = self.get_all_nodes_in_neighbour(entity)
-        print(childs)
+        #print(childs)
         l = list(entity)
         for child in childs:
             # child[0] => entity | #child[1] => weight
@@ -100,7 +100,7 @@ class SemKG:
             if(i < steps):
                 res_t = self.semantic_propagation(child[0], steps, i+1)
                 print(res_t)
-                l = l+self.semantic_propagation(child[0], steps, i+1)
+                l = [*l, *self.semantic_propagation(child[0], steps, i+1)]
             else:
                 return l
         return l
