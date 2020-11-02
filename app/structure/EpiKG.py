@@ -87,6 +87,7 @@ class EpiKG:
         delay = []
         for i in range(len(stories)-1):
             delay.append(stories.loc[i+1].time - stories.loc[i].time)
+        print(delay)
         prob_delay = self.softmax(delay)
         mean_prob_delay = np.mean(prob_delay)
         index_limit_stories = []

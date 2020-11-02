@@ -91,16 +91,11 @@ class SemKG:
 
     def semantic_propagation(self, entity, steps, i):
         childs = self.get_all_nodes_in_neighbour(entity)
-        print("CHILDS:")
-        print(childs)
         l = list()
         l.append(entity)
         for child in childs:
             # child[0] => entity | #child[1] => weight
             l.append(child[0])
-            print("child: "+child[0])
-        print("L:")
-        print(l)
         for child in childs:
             if(i < steps):
                 res_t = self.semantic_propagation(child[0], steps, i+1)
@@ -117,6 +112,6 @@ class SemKG:
             for s in propa:
                 if(s not in graph_nodes_neighbours):
                     graph_nodes_neighbours.append(s)
-        print(entities, graph_nodes_neighbours)
+        print(entities + graph_nodes_neighbours)
         stories = epikg.get_stories([self.graphNodeId[e] for e in entities+graph_nodes_neighbours], top_n, steps)
         return stories
