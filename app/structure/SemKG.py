@@ -98,7 +98,8 @@ class SemKG:
             # child[0] => entity | #child[1] => weight
             l.append(child[0])
             print("child: "+child[0])
-        print("L: "+l)
+        print("L:")
+        print(l)
         for child in childs:
             if(i < steps):
                 res_t = self.semantic_propagation(child[0], steps, i+1)
