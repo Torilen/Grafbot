@@ -98,6 +98,8 @@ class SemKG:
             l.append(child[0])
         for child in childs:
             if(i < steps):
+                res_t = self.semantic_propagation(child[0], steps, i+1)
+                print(res_t)
                 l = l+self.semantic_propagation(child[0], steps, i+1)
             else:
                 return l
