@@ -109,6 +109,6 @@ class SemKG:
             for s in propa:
                 if(s not in graph_nodes_neighbours):
                     graph_nodes_neighbours.append(s)
-        print(entities+graph_nodes_neighbours)
+        print(entities, graph_nodes_neighbours)
         stories = epikg.get_stories([self.graphNodeId[e] for e in entities+graph_nodes_neighbours], top_n, steps)
         return stories
