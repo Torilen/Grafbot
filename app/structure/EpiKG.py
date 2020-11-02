@@ -7,6 +7,8 @@ class EpiKG:
     graph_a_pointed_b = dict()
     graph_a_pointed_b_direct = dict()
 
+    sem_to_stories_with_context = dict()
+
     def get_graph(self):
         return {"predicate_root": self.graph_a_pointed_b, "s_root": self.graph_a_pointed_b_direct}
 
@@ -30,14 +32,14 @@ class EpiKG:
         if(p not in list(self.graph_a_pointed_b.keys())):
             self.graph_a_pointed_b[p] = dict()
             self.graph_a_pointed_b[p][s] = dict()
-            self.graph_a_pointed_b[p][s][o] = t
+            self.graph_a_pointed_b[p][s][o] = [t, input]
         else:
             if(s not in list(self.graph_a_pointed_b[p].keys())):
                 self.graph_a_pointed_b[p][s] = dict()
-                self.graph_a_pointed_b[p][s][o] = t
+                self.graph_a_pointed_b[p][s][o] = [t, input]
             else:
                 if(o not in self.graph_a_pointed_b[p][s].keys()):
-                    self.graph_a_pointed_b[p][s][o] = t
+                    self.graph_a_pointed_b[p][s][o] = [t, input]
 
         if(s not in list(self.graph_a_pointed_b_direct.keys())):
             self.graph_a_pointed_b_direct[s] = dict()
@@ -107,8 +109,8 @@ class EpiKG:
                     graph_content_stories.append(s)
 
 
-        stories_sample = pd.DataFrame(graph_content_stories, columns=["s", "o", "p", "time", "distance"]).sort_values(by=['time'])
-        stories_sample['sentence'] = stories_sample[['s', 'p', '0']].agg(' '.join, axis=1)
+        stories_sample = pd.DataFrame(graph_content_stories, columns=["s", "o", "p", "time", "sentence", "distance"]).sort_values(by=['time'])
+        #stories_sample['sentence'] = stories_sample[['s', 'p', '0']].agg(' '.join, axis=1)
         print(stories_sample)
         stories = []
         index_limit_stories = self.classify_stories_zone(stories_sample)
@@ -126,7 +128,7 @@ class EpiKG:
         childs = self.get_all_node_ids_pointed_by_s(entity)
         l = list()
         for child in childs:
-            l.append([entity, child[0], child[1], self.graph_a_pointed_b[child[1]][entity][child[0]], len(child[1].split())])
+            l.append([entity, child[0], child[1], self.graph_a_pointed_b[child[1]][entity][child[0]][0], self.graph_a_pointed_b[child[1]][entity][child[0]][1], len(child[1].split())])
         for child in childs:
             if(i < steps):
                 l = l+self.episodic_propagation(child[0], steps, i+1)
