@@ -93,7 +93,8 @@ class SemKG:
         childs = self.get_all_nodes_in_neighbour(entity)
         print("CHILDS:")
         print(childs)
-        l = list(entity)
+        l = list()
+        l.append(entity)
         for child in childs:
             # child[0] => entity | #child[1] => weight
             l.append(child[0])
