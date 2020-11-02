@@ -1,5 +1,6 @@
 import time
 import pandas as pd
+import numpy as np
 import json
 
 class EpiKG:
@@ -77,11 +78,22 @@ class EpiKG:
                     node_ids.append([key, p])
         return node_ids
 
+    def softmax(x):
+        """Compute softmax values for each sets of scores in x."""
+        e_x = np.exp(x - np.max(x))
+        return e_x / e_x.sum(axis=0)
+
     def classify_stories_zone(self, stories):
         delay = []
         for i in range(len(stories)-1):
             delay.append(stories.loc[i+1].time - stories.loc[i].time)
-        print(delay)
+        prob_delay = self.softmax(delay)
+        mean_prob_delay = np.mean(prob_delay)
+        index_limit_stories = []
+        for i in range(len(prob_delay)):
+            if (prob_delay[i] > mean_prob_delay):
+                index_limit_stories.append(i)
+        return index_limit_stories
 
     def get_stories(self, entities, top_n, steps):
         graph_content_stories = list()
@@ -92,11 +104,17 @@ class EpiKG:
                     graph_content_stories.append(s)
 
 
-        stories = pd.DataFrame(graph_content_stories, columns=["s", "o", "p", "time", "distance"]).sort_values(by=['time'])
+        stories_sample = pd.DataFrame(graph_content_stories, columns=["s", "o", "p", "time", "distance"]).sort_values(by=['time'])
 
         #print(stories)
+        stories = []
+        index_limit_stories = self.classify_stories_zone(stories_sample)
+        ind = 0
+        for ind_sup in index_limit_stories:
+            stories.append(stories_sample.iloc[ind:ind_sup])
+            ind = ind_sup
+        stories.append(stories_sample.iloc[ind_sup:len(stories_sample)])
 
-        self.classify_stories_zone(stories)
 
     def episodic_propagation(self, entity, steps, i):
         childs = self.get_all_node_ids_pointed_by_s(entity)

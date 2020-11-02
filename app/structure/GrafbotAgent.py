@@ -21,20 +21,27 @@ class GrafbotAgent:
         self.opt = self.parser.parse_args(print_args=False)
         self.opt['task'] = 'parlai.agents.local_human.local_human:LocalHumanAgent'
         self.agent = create_agent(self.opt, requireModelExists=True)
-        self.addStoriesLive(personality)
+        self.addStoriesLive(personality[:3])
+        self.learn(personality[3:])
         self.world = create_task(self.opt, self.agent)
 
     def addStoriesLive(self, personality):
         personalityText = ' \n'.join(["your persona: " + personaField for personaField in personality])
         self.agent.observe({'episode_done': False, 'text': personalityText})
 
+    def learn(self, sentences):
+        for sentence in sentences:
+            entities = get_entities(sentence)
+            tuples = Entities2Tuples(entities, "linear")
+            self.semkg.add_relations(tuples, self.epikg, sentence)
+
     def speak(self, reply_text):
         user_language = detect(reply_text)
 
         english_version_of_user_input = translate_base(reply_text, src=user_language)
-        #entities = get_entities(english_version_of_user_input)
-        #stories = self.semkg.get_stories(self.epikg, [x[0] for x in entities])
-        #print(stories)
+        entities = get_entities(english_version_of_user_input)
+        stories = self.semkg.get_stories(self.epikg, [x[0] for x in entities])
+        print(stories)
         reply = {'episode_done': False, 'text': english_version_of_user_input}
         self.get('agent').observe(reply)
         model_res = self.get('agent').act()
