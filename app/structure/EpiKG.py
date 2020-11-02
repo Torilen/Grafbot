@@ -88,12 +88,14 @@ class EpiKG:
         for i in range(len(stories)-1):
             delay.append(stories.loc[i+1].time - stories.loc[i].time)
         print(delay)
-        prob_delay = self.softmax(delay)
-        mean_prob_delay = np.mean(prob_delay)
         index_limit_stories = []
-        for i in range(len(prob_delay)):
-            if (prob_delay[i] > mean_prob_delay):
-                index_limit_stories.append(i)
+        if(len(delay) > 0):
+            prob_delay = self.softmax(delay)
+            mean_prob_delay = np.mean(prob_delay)
+
+            for i in range(len(prob_delay)):
+                if (prob_delay[i] > mean_prob_delay):
+                    index_limit_stories.append(i)
         return index_limit_stories
 
     def get_stories(self, entities, top_n, steps):
