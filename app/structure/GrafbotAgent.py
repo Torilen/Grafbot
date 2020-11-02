@@ -36,6 +36,7 @@ class GrafbotAgent:
             self.semkg.add_relations(tuples, self.epikg, sentence)
 
     def speak(self, reply_text):
+        print("Reply : "+reply_text)
         user_language = detect(reply_text)
 
         english_version_of_user_input = translate_base(reply_text, src=user_language)
