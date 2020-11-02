@@ -107,7 +107,7 @@ class EpiKG:
 
         stories_sample = pd.DataFrame(graph_content_stories, columns=["s", "o", "p", "time", "distance"]).sort_values(by=['time'])
 
-        #print(stories)
+        print(stories_sample)
         stories = []
         index_limit_stories = self.classify_stories_zone(stories_sample)
         ind = 0
