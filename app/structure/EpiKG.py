@@ -78,7 +78,7 @@ class EpiKG:
                     node_ids.append([key, p])
         return node_ids
 
-    def softmax(x):
+    def softmax(self, x):
         """Compute softmax values for each sets of scores in x."""
         e_x = np.exp(x - np.max(x))
         return e_x / e_x.sum(axis=0)
@@ -111,6 +111,7 @@ class EpiKG:
         stories = []
         index_limit_stories = self.classify_stories_zone(stories_sample)
         ind = 0
+        ind_sup = 0
         for ind_sup in index_limit_stories:
             stories.append(stories_sample.iloc[ind:ind_sup])
             ind = ind_sup
