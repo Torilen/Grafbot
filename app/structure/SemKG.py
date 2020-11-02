@@ -91,9 +91,10 @@ class SemKG:
 
     def semantic_propagation(self, entity, steps, i):
         childs = self.get_all_nodes_in_neighbour(entity)
-        l = list()
+        l = list(entity)
         for child in childs:
-            l.append([entity, child[0], child[1], self.graph_a_pointed_b[child[1]][entity][child[0]], len(child[1].split())])
+            # child[0] => entity | #child[1] => weight
+            l.append(child[0])
         for child in childs:
             if(i < steps):
                 l = l+self.semantic_propagation(child[0], steps, i+1)
