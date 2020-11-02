@@ -74,8 +74,8 @@ class SemKG:
             epikg.add_relation(self.graphNodeId[s[0]], self.graphNodeId[o[0]], input, s[1], o[1])
 
     def get_all_nodes_in_neighbour(self, entity):
-        print(list(self.graphNeighbour.keys))
-        if(entity in list(self.graphNeighbour.keys)):
+        #print(list(self.graphNeighbour.keys()))
+        if(entity in list(self.graphNeighbour.keys())):
             neighbour = self.graphNeighbour[entity]
             weights = [self.graph[(entity, n)] for n in neighbour]
             res = []
