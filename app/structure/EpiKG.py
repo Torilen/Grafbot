@@ -108,7 +108,7 @@ class EpiKG:
 
 
         stories_sample = pd.DataFrame(graph_content_stories, columns=["s", "o", "p", "time", "distance"]).sort_values(by=['time'])
-
+        stories_sample['sentence'] = stories_sample[['s', 'p', '0']].agg(' '.join, axis=1)
         print(stories_sample)
         stories = []
         index_limit_stories = self.classify_stories_zone(stories_sample)
@@ -118,6 +118,8 @@ class EpiKG:
             stories.append(stories_sample.iloc[ind:ind_sup])
             ind = ind_sup
         stories.append(stories_sample.iloc[ind_sup:len(stories_sample)])
+
+        return stories
 
 
     def episodic_propagation(self, entity, steps, i):
