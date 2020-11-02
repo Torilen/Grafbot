@@ -79,6 +79,8 @@ class SemKG:
             neighbour = self.graphNeighbour[entity]
             weights = [self.graph[(entity, n)] for n in neighbour]
             res = []
+            print(neighbour)
+            print(weights)
 
             for j in range(min(3, len(weights))):
                 index_max = np.argmax(weights)
@@ -97,7 +99,7 @@ class SemKG:
             l.append(child[0])
         for child in childs:
             if(i < steps):
-                l.append(self.semantic_propagation(child[0], steps, i+1))
+                l = l+self.semantic_propagation(child[0], steps, i+1)
             else:
                 return l
         return l
