@@ -94,10 +94,10 @@ class SemKG:
         l = list(entity)
         for child in childs:
             # child[0] => entity | #child[1] => weight
-            l.append([child[0]])
+            l.append(child[0])
         for child in childs:
             if(i < steps):
-                l = l+self.semantic_propagation(child[0], steps, i+1)
+                l.append(self.semantic_propagation(child[0], steps, i+1))
             else:
                 return l
         return l
