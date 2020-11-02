@@ -29,7 +29,8 @@ class GrafbotAgent:
     def addStoriesLive(self, personality):
         personalityText = ' \n'.join(["your persona: " + personaField for personaField in personality])
         print(personalityText)
-        self.agent.observe({'episode_done': False, 'text': personalityText})
+        if(len(personality) > 0):
+            self.agent.observe({'episode_done': False, 'text': personalityText})
 
     def learn(self, sentences):
         for sentence in sentences:
