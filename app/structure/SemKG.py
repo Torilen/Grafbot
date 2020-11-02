@@ -113,7 +113,7 @@ class SemKG:
                 if(s not in graph_nodes_neighbours):
                     graph_nodes_neighbours.append(s)
         print(entities + graph_nodes_neighbours)
-        stories = epikg.get_stories([self.graphNodeId[e] for e in entities+graph_nodes_neighbours], top_n, steps)
+        stories = epikg.get_stories([self.graphNodeId[e] for e in entities+graph_nodes_neighbours if e in list(self.graphNodeId.keys())], top_n, steps)
         add_to_persona = []
         for story in stories:
             add_to_persona.append('. '.join(story.sentence))
