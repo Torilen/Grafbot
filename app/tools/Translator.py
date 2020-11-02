@@ -18,6 +18,7 @@ def translate_by_url(text, src='en', dest='en'):
 
 def translate_base(text, src='en', dest='en'):
     translator = Translator()
+    print("SRC: "+src+" DEST: "+dest+" TEXT: "+text)
     return translator.translate(text, src=src, dest=dest).text
 
 def translate_by_api(text, env, src='en', dest='en'):
