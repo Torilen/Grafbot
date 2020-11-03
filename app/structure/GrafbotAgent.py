@@ -62,6 +62,7 @@ class GrafbotAgent:
             json_return['text'] = process_output_chatbot(model_res['text'])
 
         json_return['user_lang'] = user_language
+        json_return['stories'] = stories
         return jsonify(json_return)
 
     def get(self, val):
