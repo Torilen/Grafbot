@@ -114,4 +114,7 @@ class SemKG:
                     graph_nodes_neighbours.append(s)
         print(entities + graph_nodes_neighbours)
         stories = epikg.get_stories([self.graphNodeId[e] for e in entities+graph_nodes_neighbours if e in list(self.graphNodeId.keys())], top_n, steps)
-        return list(stories.sentence)
+        add_to_persona = []
+        for story in stories:
+            add_to_persona.append('. '.join(story.sentence))
+        return add_to_persona
